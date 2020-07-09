@@ -37,4 +37,4 @@ def main(ann_dirs, orig_img_dirs, out_path):
             print(f"Маска для изображения {image_name} размером {img.shape} готова и сохранена в \n{out_json_name}", )
 
 if __name__ == "__main__":
-    main()
+    main(ann_dirs, orig_img_dirs, out_path)
