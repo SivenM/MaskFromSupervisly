@@ -84,14 +84,20 @@ class GetMask(AnnData):
 
     def _create_person_poly_mask(self, obj_pp):
         """Функция создает маску person poly"""
+
+        im_masks = []
+        for obj in obj_pp:
+            exterior = np.asarray(obj.exterior)
+            exterior = exterior.reshape((-1,1,2))
+            #размеры картинки
+            height, width = self.img_size['height'], self.img_size['width']
+            # строим маску
+            blank_image = np.zeros((height,width), np.uint8)
+            im_mask = cv2.fillPoly(blank_image, [exterior], 255)
+            im_masks.append(im_mask)
         
-        exterior = np.asarray(obj_pp[0].exterior)
-        exterior = exterior.reshape((-1,1,2))
-        #размеры картинки
-        height, width = self.img_size['height'], self.img_size['width']
-        # строим маску
-        blank_image = np.zeros((height,width), np.uint8)
-        mask = cv2.fillPoly(blank_image, [exterior], 255)
+        mask = np.zeros((self.img_size['height'], self.img_size['width']), np.uint8)
+        mask = self._matrices_to_mask(im_masks, mask)
         return mask
 
     def _create_person_bmp_mask(self, obj_pb):
