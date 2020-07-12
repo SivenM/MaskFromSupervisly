@@ -17,3 +17,11 @@ def transform_img(img):
     img = img.astype('float32')
     return img
 
+
+def save_img_and_mask(outdir, image_name, img, mask):
+
+    # сохранение изображения в директории new_data\images
+    cv2.imwrite(outdir + '\\images\\' + image_name, img)
+
+    # сохранение маски в директории new_data\masks
+    cv2.imwrite(outdir + '\\masks\\' + image_name, mask)
